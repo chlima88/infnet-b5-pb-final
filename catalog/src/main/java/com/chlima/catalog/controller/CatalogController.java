@@ -1,13 +1,12 @@
 package com.chlima.catalog.controller;
 
+import com.chlima.catalog.dto.CreateProductDto;
 import com.chlima.catalog.dto.ProductDto;
 import com.chlima.catalog.service.ProductCatalog;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +27,11 @@ public class CatalogController {
     @GetMapping
     public ResponseEntity<List<ProductDto>> listProducts() {
         return ResponseEntity.ok().body(productCatalog.listProducts());
+    }
+
+    @PostMapping
+    public ResponseEntity<String> createProduct(@RequestBody CreateProductDto productDto) {
+        return ResponseEntity.ok().body(productCatalog.createProduct(productDto));
     }
 
 }

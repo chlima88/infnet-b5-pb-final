@@ -17,4 +17,14 @@ public class Product {
     @ManyToOne @JoinColumn(name = "vendorId", nullable = false)
     private Vendor vendor;
 
+    protected Product() {}
+
+    public static Product create(String name, BigDecimal price, String category, Vendor vendor){
+        Product product = new Product();
+        product.setName(name);
+        product.setCategory(category);
+        product.setVendor(vendor);
+        product.setPrice(price);
+        return product;
+    }
 }
