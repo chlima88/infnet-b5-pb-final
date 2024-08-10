@@ -15,7 +15,7 @@ public class Vendor {
     private String vendorId;
     private String name;
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     private List<Product> productList;
 
     protected Vendor(){
