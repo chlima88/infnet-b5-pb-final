@@ -2,11 +2,9 @@ package com.chlima.catalog.dto;
 
 import java.math.BigDecimal;
 
-public record ProductDto(
+public record CartItemDto(
         String productId,
-        String name,
         BigDecimal price,
-        String category,
-        String vendorId) {
-
+        Integer quantity
+) {
 }

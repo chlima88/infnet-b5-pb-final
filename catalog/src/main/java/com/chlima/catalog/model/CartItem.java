@@ -1,12 +1,17 @@
 package com.chlima.catalog.model;
 
 import jakarta.persistence.Embeddable;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @Embeddable
-@Data
+@Setter(AccessLevel.PRIVATE)
+@Getter
+@ToString
 public class CartItem {
     private String productId;
     private BigDecimal price;
