@@ -40,7 +40,8 @@ public class ProductCatalog {
     }
 
     public ProductDto getProduct(String productId){
-        Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("ProductId '"+ productId +"' not found"));
         return new ProductDto(
                 product.getProductId(),
                 product.getName(),
@@ -52,7 +53,7 @@ public class ProductCatalog {
 
     public String createProduct(CreateProductDto productDto) {
         Vendor vendor = vendorRepository.findById(productDto.vendorId())
-                .orElseThrow(() -> new EntityNotFoundException("Vendor not found"));
+                .orElseThrow(() -> new EntityNotFoundException("VendorId "+ productDto.vendorId() +" not found"));
         Product product = Product.create(
                 productDto.name(),
                 productDto.price(),
@@ -69,9 +70,9 @@ public class ProductCatalog {
 
     public void addToCart(String cartId, AddToCartDto cartItemDto) {
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new EntityNotFoundException("Cart Id not found"));
+                .orElseThrow(() -> new EntityNotFoundException("CartId "+ cartId + " not found"));
         Product product = productRepository.findById(cartItemDto.productId())
-                .orElseThrow(() -> new EntityNotFoundException("Product Id not found"));
+                .orElseThrow(() -> new EntityNotFoundException("ProductId "+ cartItemDto.productId() +" not found"));
         CartItem cartItem = CartItem.create(
                 cartItemDto.productId(),
                 product.getPrice(),
@@ -82,9 +83,9 @@ public class ProductCatalog {
 
     public void removeFromCart(String cartId, AddToCartDto cartItemDto) {
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new EntityNotFoundException("Cart Id not found"));
+                .orElseThrow(() -> new EntityNotFoundException("CartId "+ cartId + " not found"));
         Product product = productRepository.findById(cartItemDto.productId())
-                .orElseThrow(() -> new EntityNotFoundException("Product Id not found"));
+                .orElseThrow(() -> new EntityNotFoundException("ProductId "+ cartItemDto.productId() +" not found"));
         CartItem cartItem = CartItem.create(
                 cartItemDto.productId(),
                 product.getPrice(),
@@ -95,9 +96,10 @@ public class ProductCatalog {
 
     public OrderDto placeOrder(String cartId){
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new EntityNotFoundException("CartId not found"));
+                .orElseThrow(() -> new EntityNotFoundException("CartId "+ cartId + " not found"));
 
-        List<CartItemDto> cartItemDtos = cart.getCartItems().stream().map(cartItem -> (CartItemDto)toDto(cartItem, CartItemDto.class)).toList();
+        List<CartItemDto> cartItemDtos = cart.getCartItems().stream()
+                .map(cartItem -> (CartItemDto)toDto(cartItem, CartItemDto.class)).toList();
         PlaceOrderDto placeOrderDto = new PlaceOrderDto(cart.getCustomerId(), cartItemDtos);
 
         cartRepository.deleteById(cart.getCartId());

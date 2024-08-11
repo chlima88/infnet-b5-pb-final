@@ -1,11 +1,14 @@
 package com.chlima.order.model;
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Data
+@Setter(AccessLevel.PRIVATE)
 @Embeddable
 public class OrderItem {
     private String productId;

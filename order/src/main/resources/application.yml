@@ -1,5 +1,7 @@
+
 server:
-  port: ${PORT:0}
+  port: 64001
+  #port: ${PORT:0}
 spring:
   application:
     name: order
@@ -9,13 +11,17 @@ spring:
     url: jdbc:postgresql://localhost:5432/infnet-pb-at
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: false
         format_sql: true
         globally_quoted_identifiers: true
+  sql:
+    init:
+      mode: always
 eureka:
   instance:
     instance-id: ${spring.application.name}:${random.int}

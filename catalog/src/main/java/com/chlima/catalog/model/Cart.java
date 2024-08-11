@@ -21,7 +21,7 @@ public class Cart {
     private String cartId;
     private String customerId;
     @ElementCollection
-    @CollectionTable(name = "cartItem", joinColumns = @JoinColumn(name = "cartItemId"))
+    @CollectionTable(name = "cartItem", joinColumns = @JoinColumn(name = "cartId"))
     private List<CartItem> cartItems;
 
     protected Cart(){

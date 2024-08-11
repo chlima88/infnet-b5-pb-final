@@ -57,7 +57,6 @@ public class CatalogController {
 
     @GetMapping("/cart/{cartId}/place-order")
     public ResponseEntity<OrderDto> placeOrder(@PathVariable String cartId){
-        return ResponseEntity.ok().body( productCatalog.placeOrder(cartId));
+        return ResponseEntity.ok().body(productCatalog.placeOrder(cartId));
     }
-
 }
