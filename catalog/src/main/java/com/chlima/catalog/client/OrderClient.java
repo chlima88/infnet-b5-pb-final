@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient("ORDER")
 public interface OrderClient {
-    @PostMapping("/place-order")
+    @PostMapping("/orders")
     public OrderDto placeOrder(@RequestBody PlaceOrderDto placeOrderDto);
 
 }

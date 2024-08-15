@@ -1,5 +1,6 @@
 package com.chlima.order.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -25,6 +26,9 @@ public class Order {
     @ElementCollection
     @CollectionTable(name = "orderItem", joinColumns = @JoinColumn(name = "orderId"))
     private List<OrderItem> orderItems;
+    @Setter
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private String deliveryId;
 
     protected Order(){
         this.createdAt = LocalDateTime.now();

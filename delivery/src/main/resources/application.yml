@@ -1,21 +1,16 @@
 server:
-  port: ${PORT:0}
+#  port: ${PORT:0}
+  port: 64002
 spring:
   application:
     name: delivery
-  datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/infnet-pb-at
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        show_sql: false
-        format_sql: true
-        globally_quoted_identifiers: true
+  data:
+    mongodb:
+      auto-index-creation: true
+      host: localhost
+#      host: db
+      port: 27017
+      database: infnet-pb-at
 eureka:
   instance:
     instance-id: ${spring.application.name}:${random.int}
@@ -23,4 +18,14 @@ eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+#      defaultZone: http://host.docker.internal:8761/eureka
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
 

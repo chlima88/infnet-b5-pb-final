@@ -1,0 +1,35 @@
+[
+  {
+    "deliveryId": "31c055f7-f88f-4995-bcd0-780c1cb90bca",
+    "customerId": "123123",
+    "deliverer": {
+      "$ref" : "deliverer",
+      "$id" : "71a25a5d-0bdf-492b-85d8-11cfb054b47c"
+    },
+    "itemsQuantity": 1,
+    "orderId": "123123",
+    "status": "COMPLETE"
+  },
+  {
+    "deliveryId": "db33a6b6-6bef-4531-bf45-eb3c8d1c975b",
+    "customerId": "123123",
+    "deliverer": {
+      "$ref" : "deliverer",
+      "$id" : "71a25a5d-0bdf-492b-85d8-11cfb054b47c"
+    },
+    "itemsQuantity": 1,
+    "orderId": "123123",
+    "status": "COMPLETE"
+  },
+  {
+    "deliveryId": "841fe950-39c7-489c-8d7e-e7dedd8ba864",
+    "customerId": "692",
+    "deliverer": {
+      "$ref" : "deliverer",
+      "$id" : "71a25a5d-0bdf-492b-85d8-11cfb054b47c"
+    },
+    "itemsQuantity": 1,
+    "orderId": "b4187a4e-bfe1-4fc5-aeb9-7de20aa0b140",
+    "status": "COMPLETE"
+  }
+]

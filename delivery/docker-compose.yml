@@ -1,0 +1,21 @@
+version: "3"
+services:
+  api:
+    hostname: delivery-ms
+    build: .
+    ports:
+      - "64002:64002"
+    depends_on:
+      - db
+  db:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: infnet-pb-at
+
+networks:
+  delivery_default:
+    external: true
+

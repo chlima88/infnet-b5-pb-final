@@ -35,8 +35,29 @@ public class ProductCatalog {
         this.orderClient = orderClient;
     }
 
+    public List<VendorDto> listVendors(){
+
+        return vendorRepository.findAll().stream()
+                .map(this::toVendorDto).toList();
+    }
+
+    public VendorDto getVendor(String vendorId){
+        Vendor vendor = vendorRepository.findById(vendorId)
+                .orElseThrow(() -> new EntityNotFoundException("VendorId '"+ vendorId +"' not found"));
+        return new VendorDto(
+                vendor.getVendorId(),
+                vendor.getName(),
+                vendor.getCreatedAt()
+        );
+    }
+
+    public VendorDto createVendor(CreateVendorDto vendor) {
+        Vendor product = Vendor.create(vendor.name());
+        return toVendorDto(vendorRepository.save(product));
+    }
+
     public List<ProductDto> listProducts(){
-        return productRepository.findAll().stream().map(this::toDTO).toList();
+        return productRepository.findAll().stream().map(this::toProductDto).toList();
     }
 
     public ProductDto getProduct(String productId){
@@ -51,21 +72,21 @@ public class ProductCatalog {
         );
     }
 
-    public String createProduct(CreateProductDto productDto) {
+    public ProductDto createProduct(CreateProductDto productDto) {
         Vendor vendor = vendorRepository.findById(productDto.vendorId())
-                .orElseThrow(() -> new EntityNotFoundException("VendorId "+ productDto.vendorId() +" not found"));
+                .orElseThrow(()-> new EntityNotFoundException("VendorId "+ productDto.vendorId() +" not found"));
         Product product = Product.create(
                 productDto.name(),
                 productDto.price(),
                 productDto.category(),
                 vendor
         );
-        return productRepository.save(product).getProductId();
+        return toProductDto(productRepository.save(product));
     }
 
-    public String createCart(String customerId) {
+    public CartDto createCart(String customerId) {
         Cart cart = Cart.create(customerId);
-        return cartRepository.save(cart).getCartId();
+        return new CartDto(cartRepository.save(cart).getCartId());
     }
 
     public void addToCart(String cartId, AddToCartDto cartItemDto) {
@@ -106,13 +127,21 @@ public class ProductCatalog {
         return orderClient.placeOrder(placeOrderDto);
     }
 
-    private ProductDto toDTO(Product product){
+    private ProductDto toProductDto(Product product){
         return new ProductDto(
                 product.getProductId(),
                 product.getName(),
                 product.getPrice(),
                 product.getCategory(),
                 product.getVendor().getVendorId()
+        );
+    }
+
+    private VendorDto toVendorDto(Vendor vendor){
+        return new VendorDto(
+                vendor.getVendorId(),
+                vendor.getName(),
+                vendor.getCreatedAt()
         );
     }
 

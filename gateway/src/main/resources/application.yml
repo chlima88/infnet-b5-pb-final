@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-ms
+  cloud:
+    gateway:
+      routes:
+        - id: delivery-ms
+          uri: lb://delivery
+          predicates:
+            - Path=/dms/**
+          filters:
+            - StripPrefix=1
+        - id: order-ms
+          uri: lb://order
+          predicates:
+            - Path=/oms/**
+          filters:
+            - StripPrefix=1
+        - id: catalog-ms
+          uri: lb://catalog
+          predicates:
+            - Path=/cms/**
+          filters:
+            - StripPrefix=1
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    lease-renewal-interval-in-seconds: 10
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    urls:
+      - url: /dms/v3/api-docs
+        name: Delivery Service
+      - url: /cms/v3/api-docs
+        name: Catalog Service
+      - url: /oms/v3/api-docs
+        name: Order Service
